@@ -1,0 +1,23 @@
+import java.util.*;
+
+
+public class Searches {
+	private int startI, startJ;
+	public Searches(int pStartI, int pStartJ){
+		startI = pStartI;
+		startJ = pStartJ;
+	}
+	
+	Deque<Map<Integer,Integer>> deque = new ArrayDeque<Map<Integer,Integer>>();	
+	
+	 
+	public void runBFS(){
+		deque.add(e)
+	}
+	
+	public void runDFS(){
+		
+	}
+	
+	
+}

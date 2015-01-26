@@ -1,0 +1,36 @@
+import java.util.*;
+
+
+public class Searches {
+	private int startI, startJ;
+	private Deque<Map<Integer,Integer>> deque; 
+	private AdjacencyMatrix matrix;
+	
+	public Searches(AdjacencyMatrix pMatrix){
+		deque = new ArrayDeque<Map<Integer,Integer>>();	
+		matrix = pMatrix; 
+	}
+	
+	
+	private void addElementToDeque(int startI, int startJ){
+		TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
+		map.put(startI, startJ);
+		deque.add(map);
+	}
+	 
+	public void runBFS(int pStartI, int pStartJ){
+		startI = pStartI;
+		startJ = pStartJ;
+		addElementToDeque(startI, startJ);
+		
+		for (int i = 0; i < matrix.getLength(); i++){
+			addElementToDeque(startI, i);
+		}
+	}
+	
+	public void runDFS(){
+		
+	}
+	
+	
+}

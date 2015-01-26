@@ -1,0 +1,30 @@
+import java.util.*;
+
+
+public class Searches {
+	private int startI, startJ;
+	private Deque<Map<Integer,Integer>> deque; 
+	public Searches(int pStartI, int pStartJ){
+		startI = pStartI;
+		startJ = pStartJ;
+		deque = new ArrayDeque<Map<Integer,Integer>>();	
+		addElementToDeque(startI, startJ);
+	}
+	
+	
+	private void addElementToDeque(int startI, int startJ){
+		TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
+		map.put(startI, startJ);
+		deque.add(map);
+	}
+	 
+	public void runBFS(){
+		for (int i = 0; i < 
+	}
+	
+	public void runDFS(){
+		
+	}
+	
+	
+}

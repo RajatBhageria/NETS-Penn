@@ -1,0 +1,26 @@
+
+public class AdjacencyMatrix {
+	
+	private boolean [][] matrix; 
+	int n = 0;
+	
+	
+	public AdjacencyMatrix(int pN){
+		n = pN;
+		matrix = new boolean[n][n];
+	}
+	
+	public void addEdge(int w, int h){
+		matrix[w][h] = true;
+	}
+	
+	public void removeEdge(int w, int h){
+		matrix[w][h] = false;
+	}
+	
+	public boolean hasEdge(int w, int h){
+		return matrix[w][h];
+	}
+	
+	
+}

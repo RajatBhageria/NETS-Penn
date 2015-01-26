@@ -1,0 +1,16 @@
+
+public class Searches {
+	public Searches(){
+		
+	}
+	
+	public void runBFS(){
+		
+	}
+	
+	public void runDFS(){
+		
+	}
+	
+	
+}

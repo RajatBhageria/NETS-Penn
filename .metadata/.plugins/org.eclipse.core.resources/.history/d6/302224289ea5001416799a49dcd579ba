@@ -1,0 +1,22 @@
+import java.util.*;
+
+
+public class Searches {
+	private int startI, startJ;
+	public Searches(int pStartI, int pStartJ){
+		startI = pStartI;
+		startJ = pStartJ;
+	}
+	
+	 Deque<Integer> deque = new ArrayDeque<Integer>(8);	
+	
+	public void runBFS(){
+		
+	}
+	
+	public void runDFS(){
+		
+	}
+	
+	
+}

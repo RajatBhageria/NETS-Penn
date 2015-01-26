@@ -1,0 +1,18 @@
+
+public class Searches {
+	private int startI, startJ;
+	public Searches(int pStartI, int pStartJ){
+		startI = pStartI;
+		startJ = pStartJ;
+	}
+	
+	public void runBFS(){
+		
+	}
+	
+	public void runDFS(){
+		
+	}
+	
+	
+}
