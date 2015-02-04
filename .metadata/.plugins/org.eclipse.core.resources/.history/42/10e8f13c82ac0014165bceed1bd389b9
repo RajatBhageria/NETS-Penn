@@ -35,8 +35,6 @@ public class Searches {
 			
 		}
 		System.out.println("All nodes have been examined");
-		set.clear();
-		deque.clear();
 		return count;
 	}
 	

@@ -17,12 +17,10 @@ public class Searches {
 	public int runBFS(int root, int target){
 		deque.add(root);
 		set.add(root);
-		int count = 0;
 		while (!deque.isEmpty()){
 			int current = deque.pop();
-			count++;
 			if (current == target){
-				return count;
+				return current;
 			}
 			ArrayList<Integer> adjacentEdges = findAdjacentEdges(current);
 			for (int e = 0; e < adjacentEdges.size(); e++){
@@ -30,14 +28,12 @@ public class Searches {
 				if (!set.contains((int) adjacentVertex)){
 					deque.add(adjacentVertex);
 					set.add(adjacentVertex);
+					
 				}
 			}
 			
 		}
-		System.out.println("All nodes have been examined");
-		set.clear();
-		deque.clear();
-		return count;
+		return -1;
 	}
 	
 	public ArrayList<Integer> findAdjacentEdges(int node){
