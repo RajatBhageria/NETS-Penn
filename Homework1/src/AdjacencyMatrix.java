@@ -42,6 +42,10 @@ public class AdjacencyMatrix {
 	 * @return The number of different edges in the graph 
 	 */
 	public int getNumberOfVertices(){
+		return numberOfVertices; 
+	}
+	
+	public Set<Integer> allVertices(){
 		Set<Integer> set = new HashSet<Integer>();
 		for (int i = 0; i < matrix.length; i++){
 			for (int j = 0; j < matrix.length; j++){
@@ -52,9 +56,9 @@ public class AdjacencyMatrix {
 				}
 			}
 		}
-		return set.size();
+		numberOfVertices = set.size();
+		return set; 
 	}
-	
 	
 	/**
 	 * @return Return Length/Height of Matrix
@@ -78,6 +82,6 @@ public class AdjacencyMatrix {
 	}
 	
 	
-	
+	private int numberOfVertices =0;
 	
 }
