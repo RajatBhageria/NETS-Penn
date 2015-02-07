@@ -43,6 +43,8 @@ public class Searches {
 					if (adjacentVertex == target) return count;
 					deque.add(adjacentVertex);
 					set.add(adjacentVertex);
+					matrix.removeEdge(e, adjacentVertex);
+					matrix.removeEdge(adjacentVertex, e);
 				}
 			}
 		}
@@ -85,6 +87,9 @@ public class Searches {
 				//if (set.contains(e)) adjacentEdges.remove(e);
 				if (!set.contains((int) adjacentVertex)){
 					deque.add(adjacentVertex);
+					set.add(adjacentVertex);
+					matrix.removeEdge(e, adjacentVertex);
+					matrix.removeEdge(adjacentVertex, e);
 				}
 			}
 			
@@ -104,7 +109,7 @@ public class Searches {
 	 * @param The starting "root" of the algorithm
 	 * @return An ArrayList of all adjacent edges. 
 	 */
-	private ArrayList<Integer> findAdjacentEdges(int node){
+	public ArrayList<Integer> findAdjacentEdges(int node){
 		ArrayList<Integer> arr = new ArrayList<Integer>();
 		for (int i = 0; i < matrix.getLength(); i++){
 			if (matrix.hasEdge(node,i)) arr.add(i);

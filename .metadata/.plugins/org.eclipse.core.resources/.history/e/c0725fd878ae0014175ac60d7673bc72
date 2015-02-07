@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class AdjacencyList implements AdjacencyStructure {
+public class AdjacencyList {
 	
 	private Map<Integer, LinkedList<Integer>> map;
 	int n = 0;
@@ -52,33 +52,19 @@ public class AdjacencyList implements AdjacencyStructure {
 		}
 		else if (map.containsKey(j)){
 			test = map.get(j);
-			return test.contains(i);
-		}		
-		return false; 
-	}
-	
-	
-	/**
-	 * @return A set with all the vertices in the graph. 
-	 */
-	public Set<Integer> allVertices(){
-		Set<Integer> set = new HashSet<Integer>();
-		for (int i = 0; i < map.size(); i++){
-			for (int j = 0; j < map.get(i).size();j++){
-					if (!set.contains(j)) set.add(j);
-			}
+			if (!test.contains(i)) test.add(i);
+
 		}
-		numberOfVertices = set.size();
-		return set; 
+		= map.get(i);
+		
+		
 	}
-
-
 	
 	/**
 	 * @return The number of different edges in the graph 
 	 */
 	public int getNumberOfVertices(){
-		return numberOfVertices;
+		return numberOfVertices; 
 	}
 	
 	
@@ -90,7 +76,7 @@ public class AdjacencyList implements AdjacencyStructure {
 	}
 
 	
-	private int numberOfVertices=0;
+	private int numberOfVertices =0;
 	
 }
 

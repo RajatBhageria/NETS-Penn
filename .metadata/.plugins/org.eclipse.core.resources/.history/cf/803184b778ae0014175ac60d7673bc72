@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class AdjacencyList implements AdjacencyStructure {
+public class AdjacencyList {
 	
 	private Map<Integer, LinkedList<Integer>> map;
 	int n = 0;
@@ -26,15 +26,12 @@ public class AdjacencyList implements AdjacencyStructure {
 	 * @param The two nodes (i,j) in which there exists an edge. 
 	 */
 	public void addEdge(int i, int j){
-		LinkedList<Integer> test;
-		if (map.containsKey(i)){
-			 test = map.get(i);
-			 if (!test.contains(j)) test.add(j);
+		LinkedList<Integer> test = map.get(i);
+		if (test.contains(j)){
+			return;
 		}
-		else if (map.containsKey(j)){
-			test = map.get(j);
-			if (!test.contains(i)) test.add(i);
-
+		else{
+			test.add(j);
 		}
 	}
 
@@ -45,40 +42,14 @@ public class AdjacencyList implements AdjacencyStructure {
 	 *  position in the adjacency matrix
 	 */
 	public boolean hasEdge(int i, int j){
-		LinkedList<Integer> test;
-		if (map.containsKey(i)){
-			 test = map.get(i);
-			 return test.contains(j);
-		}
-		else if (map.containsKey(j)){
-			test = map.get(j);
-			return test.contains(i);
-		}		
-		return false; 
+		
 	}
-	
-	
-	/**
-	 * @return A set with all the vertices in the graph. 
-	 */
-	public Set<Integer> allVertices(){
-		Set<Integer> set = new HashSet<Integer>();
-		for (int i = 0; i < map.size(); i++){
-			for (int j = 0; j < map.get(i).size();j++){
-					if (!set.contains(j)) set.add(j);
-			}
-		}
-		numberOfVertices = set.size();
-		return set; 
-	}
-
-
 	
 	/**
 	 * @return The number of different edges in the graph 
 	 */
 	public int getNumberOfVertices(){
-		return numberOfVertices;
+		return numberOfVertices; 
 	}
 	
 	
@@ -90,7 +61,7 @@ public class AdjacencyList implements AdjacencyStructure {
 	}
 
 	
-	private int numberOfVertices=0;
+	private int numberOfVertices =0;
 	
 }
 

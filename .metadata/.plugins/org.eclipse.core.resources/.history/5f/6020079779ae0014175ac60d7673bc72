@@ -43,6 +43,8 @@ public class Searches {
 					if (adjacentVertex == target) return count;
 					deque.add(adjacentVertex);
 					set.add(adjacentVertex);
+					matrix.removeEdge(e, adjacentVertex);
+					matrix.removeEdge(adjacentVertex, e);
 				}
 			}
 		}
