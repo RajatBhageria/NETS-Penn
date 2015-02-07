@@ -1,18 +1,13 @@
 import java.util.*;
 
-
 public class Searches {
-	private AdjacencyMatrix matrix;
-	private AdjacencyList list; 
+	private AdjacencyStructure struct;
 	
-	public Searches(AdjacencyMatrix pMatrix){
-		matrix = pMatrix; 
+	public Searches(AdjacencyStructure pStruct){
+		struct = pStruct;
 	}
 	
-	public Searches(AdjacencyList pList){
-		list = pList; 
-	}
-	
+
 	/**
 	 * This method runs the BFS algorithm and returns back the 
 	 * shortest distance between the starting "root" and a target
@@ -32,7 +27,7 @@ public class Searches {
 			int current = deque.pop();
 			ArrayList<Integer> adjacentEdges = findAdjacentEdges(current);
 			//System.out.println(adjacentEdges);
-			if (set.size()==matrix.getNumberOfVertices()){
+			if (set.size()==struct.getNumberOfVertices()){
 				System.out.println("All Edges Have Been Examined");
 			}
 			if (adjacentEdges.size()>0) count++;
@@ -71,20 +66,22 @@ public class Searches {
 		set.add(root);
 		int count = 0;
 		while (!deque.isEmpty()){
-			if (set.size()==matrix.getNumberOfVertices()){
+			if (set.size()==struct.getNumberOfVertices()){
 				System.out.println("All Edges Have Been Examined. "
 						+ "The Graph is Fully Connected");
-				//return count;
+				return count;
 			}
+			if (count == 4) System.out.println("The number of nodes that are a "
+					+ "distance of 4 away from the root are: " + set.size());
 			int current = deque.remove();
 			ArrayList<Integer> adjacentEdges = findAdjacentEdges(current);
-			System.out.println(adjacentEdges);
 			if (adjacentEdges.size()>0) count++;
 			for (int e = 0; e < adjacentEdges.size(); e++){
 				int adjacentVertex = adjacentEdges.get(e);
-				//if (set.contains(e)) adjacentEdges.remove(e);
+				if (set.contains(e)) adjacentEdges.remove(e);
 				if (!set.contains((int) adjacentVertex)){
 					deque.add(adjacentVertex);
+					set.add(adjacentVertex);
 				}
 			}
 			
@@ -106,31 +103,47 @@ public class Searches {
 	 */
 	private ArrayList<Integer> findAdjacentEdges(int node){
 		ArrayList<Integer> arr = new ArrayList<Integer>();
-		for (int i = 0; i < matrix.getLength(); i++){
-			if (matrix.hasEdge(node,i)) arr.add(i);
+		for (int i = 0; i < struct.getLength(); i++){
+			if (struct.hasEdge(node,i)) arr.add(i);
 		}
 		return arr;
 	}
 	
+	
+	private static ArrayList<Integer> adjacentNodes = new ArrayList<Integer>();
+	private static Set<Integer> seenNodes = new HashSet<Integer>();
+	
 	/**
 	 * This method runs the DFS algorithm. p
 	 * @param The starting "root" of the algorithm
-	 */
-	public void runDFS(int root){
-		Set<Integer> set = new HashSet<Integer>();
-		set.add(root);
-		ArrayList<Integer> adjacentEdges = findAdjacentEdges(root);
-		for (int e = 0; e < adjacentEdges.size(); e++){
-			int adjacentVertex = adjacentEdges.get(e);
-			if (!set.contains((int) adjacentVertex)){
-				runDFS(adjacentVertex);
+	*/
+	public Set<Integer> runDFS(int root) {
+		runDFSHelper(root);
+		return seenNodes;
+	}
+	
+	/**
+	 * This is a helper method for the runDFS() method. 
+	 * @param The starting "root" of the algorithm
+	*/
+	public void runDFSHelper(int root) {
+		seenNodes.add(root);	
+		adjacentNodes = findAdjacentEdges(root);
+		System.out.println(adjacentNodes.size());
+		for (int i=0;i<adjacentNodes.size();i++) {
+			if (!seenNodes.contains((int) adjacentNodes.get(i))) {
+			     runDFS(adjacentNodes.get(i));
 			}
 		}
 	}
 	
 	
+	/**
+	 * This 
+	 * @param The starting "root" of the algorithm
+	*/
 	public int distanceOfFour(int root){
-		Set<Integer> set = matrix.allVertices();
+		Set<Integer> set = struct.allVertices();
 		int count =0;
 		for (int i = 0; i < set.size(); i++){
 			while (set.iterator().hasNext()){

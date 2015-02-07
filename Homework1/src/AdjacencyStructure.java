@@ -8,4 +8,5 @@ public interface AdjacencyStructure {
 	int getNumberOfVertices();
 	int getLength();
 	
+	
 }
