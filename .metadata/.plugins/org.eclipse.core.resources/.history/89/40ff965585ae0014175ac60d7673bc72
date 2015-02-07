@@ -114,7 +114,7 @@ public class Searches {
 	private static Set<Integer> seenNodes = new HashSet<Integer>();
 	
 	/**
-	 * This method runs the DFS algorithm.
+	 * This method runs the DFS algorithm. p
 	 * @param The starting "root" of the algorithm
 	*/
 	public Set<Integer> runDFS(int root) {
@@ -130,7 +130,7 @@ public class Searches {
 		seenNodes.add(root); adjacentNodes = findAdjacentEdges(root);
 		for (int i=0;i<adjacentNodes.size();i++) {
 			if (!seenNodes.contains((int) adjacentNodes.get(i))) {
-			   runDFS(adjacentNodes.get(i));
+			     runDFS(adjacentNodes.get(i));
 			}
 		}
 	}
@@ -144,14 +144,14 @@ public class Searches {
 	*/
 	public int distanceOfFour(int root){
 		Set<Integer> set = struct.allVertices();
-		int counter =0;
+		int count =0;
 		for (int i = 0; i < set.size(); i++){
 			while (set.iterator().hasNext()){
-				if (runBFS(root, set.iterator().next())==4) counter++;
+				if (runBFS(root, set.iterator().next())==4) count++;
 			}
 		}
 		
-		return counter;
+		return count;
 	}
 	
 
