@@ -23,16 +23,12 @@ public class AdjacencyList {
 	}
 	
 	/**
-	 * @param The height (w) and the  width (w) of the matrix
+	 * @param 
 	 */
-	public void addEdge(int w, int h){
+	public void addEdge(int i, int j){
+		
 	}
-	
-	/**
-	 * @param The height (w) and the  width (w) of the matrix
-	 */
-	public void removeEdge(int w, int h){
-	}
+
 	
 	/**
 	 * @param The height (w) and the  width (w) of the matrix
@@ -71,22 +67,7 @@ public class AdjacencyList {
 	public int getLength(){
 		return n;
 	}
-	
-	/**
-	 * @return Representation of the AdjacencyMatrix
-	 */
-	/**
-	public String toString(){
-		String out = "";
-		for (int i = 0; i < matrix.length; i++){
-			for (int j = 0; j < matrix.length; j++){
-				out = out + " " + matrix[i][j] + " ";
-			}
-			out = out + "\n";
-		}
-		return out;
-	}
-	*/
+
 	
 	private int numberOfVertices =0;
 	

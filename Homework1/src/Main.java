@@ -13,7 +13,6 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		//AdjacencyMatrix matrix = new AdjacencyMatrix(52);
 		AdjacencyMatrix matrix = new AdjacencyMatrix(4039);
 		int i = 0, j = 0;
 		
@@ -43,8 +42,10 @@ public class Main {
 		}		
 		
 		Searches search = new Searches(matrix);
-		
+		//System.out.println("The Distance between nodes 40 and 1050 is: " +search.runBFSTester(40, 1050));
+
 		System.out.println("The Distance between nodes 40 and 1050 is: " +search.runBFS(40, 1050));
+		//System.out.println("The Distance between nodes 40 and 1050 is: " +search.runBFS(1, 51));
 		//System.out.println("Examining all Nodes: " +search.runBFS(0));
 		//System.out.println("The Number of Frontiers Visited from Root 0: " + search.runBFS(0));
 		//System.out.println("The Number of Frontiers Visited from Root 15: " + search.runBFS(15));

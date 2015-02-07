@@ -8,6 +8,8 @@ public class Searches {
 		matrix = pMatrix; 
 	}
 	
+	
+	
 	/**
 	 * This method runs the BFS algorithm and returns back the 
 	 * shortest distance between the starting "root" and a target
@@ -51,6 +53,8 @@ public class Searches {
 		return Integer.MAX_VALUE; 
 	}
 	
+
+	
 	
 	/**
 	 * Overloaded method for runBFS(). Instead of taking in a target node, 
@@ -83,8 +87,6 @@ public class Searches {
 					set.add(adjacentVertex);
 					matrix.removeEdge(e, adjacentVertex);
 					matrix.removeEdge(adjacentVertex, e);
-					
-					
 				}
 			}
 			
@@ -141,5 +143,6 @@ public class Searches {
 		return count;
 	}
 	
-	
+
+		
 }

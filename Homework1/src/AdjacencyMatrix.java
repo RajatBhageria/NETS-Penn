@@ -70,6 +70,7 @@ public class AdjacencyMatrix {
 	/**
 	 * @return Representation of the AdjacencyMatrix
 	 */
+	@Override
 	public String toString(){
 		String out = "";
 		for (int i = 0; i < matrix.length; i++){
@@ -83,5 +84,9 @@ public class AdjacencyMatrix {
 	
 	
 	private int numberOfVertices =0;
+	
+	public boolean[][] get2DArray(){
+		return matrix;
+	}
 	
 }
