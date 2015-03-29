@@ -44,19 +44,31 @@ public class Main {
         
        
         //Question 3
+        String role = "King"; //This is the role used
         System.out.println("Question 3: List all actors nominated for a Best "
-                + "Leading Actor award whose role was playing a King:");
-        for (String e: q.question3()){
+                + "Leading Actor award whose role was playing a " + role + ":");
+        for (String e: q.question3(role)){
             System.out.println(e);
         }
         System.out.println("\n");
         
         
         //Question 4
-        System.out.println("Question 4: For the year 2006, list all actresses "
+        int year = 2006; //This is the year used 
+        System.out.println("Question 4: For the year " + year + ", list all actresses "
                + "nominated for a Best Leading Actress award along with the\n"
                + "movie and their age that year.");
-        for (String e: q.question4()){
+        for (String e: q.question4(year)){
+            System.out.println(e);
+        }
+        System.out.println("\n");
+        
+        
+        //Question 5
+        System.out.println("Question 5: List all directors"
+                + " (with the corresponding movies) that have been nominated "
+                + "for at least 4 Best Director awards.");
+        for (String e: q.question5()){
             System.out.println(e);
         }
         System.out.println("\n");

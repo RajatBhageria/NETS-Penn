@@ -7,7 +7,6 @@ package internetdata;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.lang.model.util.Elements;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -23,14 +22,15 @@ public class Questions {
     private Element link;
 
     public Questions() throws IOException {
-        doc = Jsoup.connect("http://en.wikipedia.org/wiki/Portal:Academy_Award").get();
+        doc = Jsoup.connect("http://en.wikipedia.org/wiki/"
+                + "Portal:Academy_Award").get();
         link = doc.select("a").first();
     }
 
 
     /**
      * Question 1
-     * @param The producer that the user wants to use
+     * @param producer The producer that the user wants to use
      * @return An arrayList of all the movies that were nominated by the
      * particular producer. 
      */
@@ -55,8 +55,8 @@ public class Questions {
     
     /**
      * Question 2
-     * @param The movie that the user wants to use
-     * @return An arrayList of all the writers of that movi
+     * @param movie: The movie that the user wants to use
+     * @return An arrayList of all the writers of that movie
      */
     public ArrayList<String> question2(String movie){
         Document question2 = null;
@@ -80,9 +80,10 @@ public class Questions {
     
      /**
      * Question 3
+     * @param role: The role that you want to check. Initially "King"
      * @return An arrayList of all the movies in which someone plays king
      */
-    public ArrayList<String> question3(){
+    public ArrayList<String> question3(String role){
         Document question3 = null;
         try {
              question3 = Jsoup.connect("http://en.wikipedia.org/wiki/"
@@ -92,34 +93,83 @@ public class Questions {
         }
         ArrayList<String> q3 = new ArrayList<String>();
         for (Element td: question3.getElementsByTag("td")){
-            if (td.text().startsWith("King")){
-                            System.out.println(td.previousElementSibling().previousElementSibling().text());
-
+            if (td.text().startsWith(role)){
+                q3.add(td.previousElementSibling().
+                        previousElementSibling().text());
             }
         } 
         return q3;
     }
     
-     /**
+    /**
      * Question 4
-     * @param The movie that the user wants to use
-     * @return An arrayList of all the writers of that movie
+     * @param year that the user wants the answer to be about
+     * @return ArrayList of the actress's name, 
+     * her age at the time, and the movie she acted in
      */
-    public ArrayList<String> question4(){
-        Document question3 = null;
+    public ArrayList<String> question4(int year){
+        Document question4 = null;
         try {
-             question3 = Jsoup.connect("http://en.wikipedia.org/wiki/"
-                     + "Academy_Award_for_Best_Actor").get();
+             question4 = Jsoup.connect("http://en.wikipedia.org/wiki/"
+                     + "Academy_Award_for_Best_Actress").get();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        ArrayList<String> q3 = new ArrayList<String>();
-        for (Element td: question3.getElementsByTag("td")){
-            if (td.text().startsWith("King")){
-                            System.out.println(td.previousElementSibling().text());
-
-            }
+        ArrayList<String> q4 = new ArrayList<String>();
+        for (Element tr: question4.getElementsByTag("tr")){
+            if (tr.child(0).text().startsWith(year + "")){
+                Element actress = tr; 
+                String nextYear = 1 + year + "";
+                while (!actress.nextElementSibling().text().
+                        startsWith(nextYear)){
+                    actress = actress.nextElementSibling();
+                    String name = actress.child(0).text();
+                    String film = actress.child(1).text();
+                    
+                    
+                    //Finding the age
+                    String href = actress.child(0).child(0).attr("href");
+                    Document ageDoc = null;
+                    try {
+                        ageDoc = Jsoup.connect(
+                                "https://en.wikipedia.org"+href).get();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    String bday = "";
+                    for (Element l: ageDoc.getElementsByClass("bday")){
+                        bday = l.text();
+                    }
+                    Integer birthYearInt = 
+                            Integer.parseInt(bday.substring(0,4));
+                    int ageAtCeremony = year - birthYearInt;
+                    
+                    //Adding everything to the ArrayList to be returned
+                    q4.add("Actress: " + name );
+                    q4.add("Film: " + film);
+                    q4.add("Age: " + ageAtCeremony);
+                }
+            }   
         } 
-        return q3;
+        return q4;
+    }
+    
+    /**
+     * Question 5
+     * @return An arrayList of all the directors 
+     */
+    public ArrayList<String> question5(){
+        Document question5 = null;
+        try {
+             question5 = Jsoup.connect("http://en.wikipedia.org/wiki/"
+                     + "Academy_Award_for_Best_Directing").get();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        ArrayList<String> q5 = new ArrayList<String>();
+        for (Element tr: question5.getElementsByTag("tr")){
+            
+        } 
+        return q5;
     }
 }
