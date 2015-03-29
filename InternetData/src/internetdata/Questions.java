@@ -16,8 +16,18 @@ import org.jsoup.nodes.Element;
  *
  * @author RajatBhageria
  */
+
 public class Questions {
     
+    private Document doc;
+    private Element link;
+
+    public Questions() throws IOException {
+        doc = Jsoup.connect("http://en.wikipedia.org/wiki/Portal:Academy_Award").get();
+        link = doc.select("a").first();
+    }
+
+
     /**
      * Question 1
      * @param The producer that the user wants to use
@@ -25,10 +35,11 @@ public class Questions {
      * particular producer. 
      */
     public ArrayList<String> question1(String producer){
-                Document question1 = null;
+        Document question1 = null;
         try {
              question1 = Jsoup.connect("http://en.wikipedia.org/wiki/"
                      + "Academy_Award_for_Best_Picture").get();
+             
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -45,7 +56,7 @@ public class Questions {
     /**
      * Question 2
      * @param The movie that the user wants to use
-     * @return An arrayList of all the writers of that movie
+     * @return An arrayList of all the writers of that movi
      */
     public ArrayList<String> question2(String movie){
         Document question2 = null;
@@ -69,8 +80,7 @@ public class Questions {
     
      /**
      * Question 3
-     * @param The movie that the user wants to use
-     * @return An arrayList of all the writers of that movie
+     * @return An arrayList of all the movies in which someone plays king
      */
     public ArrayList<String> question3(){
         Document question3 = null;
@@ -80,12 +90,36 @@ public class Questions {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        ArrayList<String> q2 = new ArrayList<String>();
-        for (Element tr: question3.getElementsByTag("tr")){
-            if (tr.lastElementSibling().previousElementSibling().text().contains("King")){
-                q2.add(tr.firstElementSibling().nextElementSibling().text());
+        ArrayList<String> q3 = new ArrayList<String>();
+        for (Element td: question3.getElementsByTag("td")){
+            if (td.text().startsWith("King")){
+                            System.out.println(td.previousElementSibling().previousElementSibling().text());
+
             }
+        } 
+        return q3;
+    }
+    
+     /**
+     * Question 4
+     * @param The movie that the user wants to use
+     * @return An arrayList of all the writers of that movie
+     */
+    public ArrayList<String> question4(){
+        Document question3 = null;
+        try {
+             question3 = Jsoup.connect("http://en.wikipedia.org/wiki/"
+                     + "Academy_Award_for_Best_Actor").get();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
-        return q2;
+        ArrayList<String> q3 = new ArrayList<String>();
+        for (Element td: question3.getElementsByTag("td")){
+            if (td.text().startsWith("King")){
+                            System.out.println(td.previousElementSibling().text());
+
+            }
+        } 
+        return q3;
     }
 }

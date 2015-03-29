@@ -5,6 +5,8 @@
  */
 package internetdata;
 
+import java.io.IOException;
+
 /**
  *
  * @author RajatBhageria
@@ -14,7 +16,7 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         
         Questions q = new Questions();
 
@@ -42,12 +44,21 @@ public class Main {
         
        
         //Question 3
-        System.out.println("Question 2: List all actors nominated for a Best "
+        System.out.println("Question 3: List all actors nominated for a Best "
                 + "Leading Actor award whose role was playing a King:");
         for (String e: q.question3()){
             System.out.println(e);
         }
         System.out.println("\n");
         
+        
+        //Question 4
+        System.out.println("Question 4: For the year 2006, list all actresses "
+               + "nominated for a Best Leading Actress award along with the\n"
+               + "movie and their age that year.");
+        for (String e: q.question4()){
+            System.out.println(e);
+        }
+        System.out.println("\n");
     }
 }
