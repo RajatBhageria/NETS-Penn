@@ -1,8 +1,0 @@
-
-public class Vertex {
-	public Vertex(int StartI, int StartJ){
-		
-	}
-	
-	
-}
