@@ -65,10 +65,11 @@ public class Main {
         
         
         //Question 5
+        int numberOfAwards = 4; 
         System.out.println("Question 5: List all directors"
                 + " (with the corresponding movies) that have been nominated "
                 + "for at least 4 Best Director awards.");
-        for (String e: q.question5()){
+        for (String e: q.question5(numberOfAwards)){
             System.out.println(e);
         }
         System.out.println("\n");
