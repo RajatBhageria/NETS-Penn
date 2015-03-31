@@ -7,6 +7,7 @@ package internetdata;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -159,6 +160,8 @@ public class Questions {
     
     /**
      * Question 5
+     * @param numberOfAwards. The minimum number of Best Director Awards
+     * that a director needs to win to be returned by this algorithm. 
      * @return An arrayList of all the directors 
      */
     public ArrayList<String> question5(int numberOfAwards){
@@ -206,5 +209,51 @@ public class Questions {
         }
         return q5;
     }
+    
+    /**
+     * Question 6
+     * @return An arrayList of all the movies 
+     */
+    public ArrayList<String> question6(){
+        Document question6 = null;
+        try {
+             question6 = Jsoup.connect("http://en.wikipedia.org/wiki/"
+                     + "List_of_Academy_Award_winners_and_nominees_for_"
+                     + "Best_Foreign_Language_Film").get();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        HashMap<String,HashSet<String>> q6 = new HashMap<String, HashSet<String>>();
+        for (Element tr: question6.getElementsByTag("tr")){
+            if ((tr.child(0).text().startsWith("19") || tr.child(0).text().startsWith("20")) && !tr.child(0).text().startsWith("2014")){
+                String name = tr.child(1).text();
+                String country = tr.child(3).text();
+                System.out.println(country);
+                if (!q6.containsKey(country)){
+                    HashSet<String> movies = new HashSet<String>();
+                    movies.add(name);
+                    q6.put(country,  movies);
+                }
+                else{
+                    HashSet<String> movies = q6.get(country);
+                    movies.add(name);
+                    q6.put(country, movies);
+                }
+            }
+        }
+        int size = 0;
+        ArrayList<String> output = new ArrayList<>();
+        for (int i = 0 ; i < q6.size(); i ++){
+            if (q6.get(i).size()>size){
+                size =q6.get(i).size();
+                output.clear();
+                for (String e: q6.get(i)){
+                    output.add(e);
+                }
+            }
+        }
+        return output;
+        
+    }
+    
 }
-
