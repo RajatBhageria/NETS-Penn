@@ -178,7 +178,8 @@ public class Questions {
             if (person.endsWith(")") && person.contains("–")){
                 int openParen = person.indexOf("(");
                 int closeParen = person.indexOf(")");
-                int number = Integer.parseInt(person.substring(openParen+1, closeParen));
+                int number = Integer.parseInt(
+                        person.substring(openParen+1, closeParen));
                 
                 String href = li.child(0).attr("href");
                 String actorName = li.child(0).attr("title");
@@ -203,7 +204,6 @@ public class Questions {
         }
 
         for (int i = 1; i < moviesDirectors.size()-1;i++){
-            
                 if (q5.contains(moviesDirectors.get(i))){
                     int index = q5.indexOf(moviesDirectors.get(i));
                     q5.add(index+3,moviesDirectors.get(i+1));
@@ -216,7 +216,7 @@ public class Questions {
     
     /**
      * Question 6
-     * @return An arrayList of all the movies 
+     * @return An arrayList of all the movies with the country with most movies
      */
     public ArrayList<String> question6(){
         Document question6 = null;
@@ -227,12 +227,20 @@ public class Questions {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        HashMap<String,HashSet<String>> q6 = new HashMap<String, HashSet<String>>();
+        HashMap<String,HashSet<String>> q6 = 
+                new HashMap<String, HashSet<String>>();
         for (Element tr: question6.getElementsByTag("tr")){
-            if ((tr.child(0).text().startsWith("19") || tr.child(0).text().startsWith("20")) && !tr.child(0).text().startsWith("2014")){
-                String name = tr.child(1).text();
-                String country = tr.child(3).text();
-                System.out.println(country);
+            
+            if ((tr.child(0).text().startsWith("19") 
+                    || tr.child(0).text().startsWith("20")) ){
+                String name = "";
+                String country = "";
+                try{
+                    name = tr.child(1).text();
+                    country = tr.child(3).text();
+                } catch(Exception e){
+                    
+                }
                 if (!q6.containsKey(country)){
                     HashSet<String> movies = new HashSet<String>();
                     movies.add(name);
@@ -247,17 +255,76 @@ public class Questions {
         }
         int size = 0;
         ArrayList<String> output = new ArrayList<>();
-        for (int i = 0 ; i < q6.size(); i ++){
-            if (q6.get(i).size()>size){
-                size =q6.get(i).size();
+        for (String e:q6.keySet()){
+            if (q6.get(e).size()>size){
+                size =q6.get(e).size();
                 output.clear();
-                for (String e: q6.get(i)){
-                    output.add(e);
+                output.add("Country: " + e + "\n");
+                output.add("Movies:");
+                for (String g: q6.get(e)){
+                    output.add(g);
+//                }
                 }
             }
         }
-        return output;
-        
+        return output;  
+    }
+    
+   /**
+     * Question 7
+     * @param numberOfAwards. The minimum number of Best Director Awards
+     * that a director needs to win to be returned by this algorithm. 
+     * @return An arrayList of all the directors 
+     */
+    public ArrayList<String> question7(String actor, String typeOfAward){
+        Document question5 = null;
+        try {
+             question5 = Jsoup.connect("http://en.wikipedia.org/wiki/"
+                     + "Academy_Award_for_Best_Animated_Feature").get();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        ArrayList<String> q7 = new ArrayList<String>();
+        for (Element li: question5.getElementsByTag("li")){
+            String person = li.text();
+            if (person.endsWith(")") && person.contains("–")){
+                int openParen = person.indexOf("(");
+                int closeParen = person.indexOf(")");
+                int number = Integer.parseInt(
+                        person.substring(openParen+1, closeParen));
+                
+                String href = li.child(0).attr("href");
+                String actorName = li.child(0).attr("title");
+                Document actorPage = null;
+
+                if (number >= numberOfAwards){
+                    q7.add("\n");
+                    q7.add(actorName);
+                    q7.add("Number of Awards: " + number);
+                    q7.add("Movies: ");
+                }
+            }
+        }
+        ArrayList<String> moviesDirectors = new ArrayList<>();
+        for (Element tr: question5.getElementsByTag("tr")){            
+            if (tr.text().contains(" – ") && !tr.text().startsWith("4")){
+               for (Element a: tr.getElementsByTag("a")){
+                   if (!a.text().startsWith("19") && !a.text().startsWith("20"))
+                    moviesDirectors.add(a.text());
+               }
+            }
+        }
+
+        for (int i = 1; i < moviesDirectors.size()-1;i++){
+                if (q7.contains(moviesDirectors.get(i))){
+                    int index = q7.indexOf(moviesDirectors.get(i));
+                    q7.add(index+3,moviesDirectors.get(i+1));
+                    i++;
+                }
+                
+        }
+        return q7;
     }
     
 }
+
