@@ -64,26 +64,26 @@ public class Main {
 //        System.out.println("\n");
 //        
 //        
-//        //Question 5
-//        int numberOfAwards = 4; 
-//        System.out.println("Question 5: List all directors"
-//                + " (with the corresponding movies) that have been nominated "
-//                + "for at least 4 Best Director awards.");
-//        for (String e: q.question5(numberOfAwards)){
-//            System.out.println(e);
-//        }
-//        System.out.println("\n");
-//
-//        
-        //Question 6
-        System.out.println("Question 6: List the country "
-                + "(with the corresponding movies) that has been nominated "
-                + "the most number of times for "
-                + "Best Foreign Language Film award.");
-        q.question6();
-        for (String e: q.question6()){
+        //Question 5
+        int numberOfAwards = 1; 
+        System.out.println("Question 5: List all directors"
+                + " (with the corresponding movies) that have been nominated "
+                + "for at least 4 Best Director awards.");
+        for (String e: q.question5(numberOfAwards)){
             System.out.println(e);
         }
         System.out.println("\n");
+
+//        
+//        //Question 6
+//        System.out.println("Question 6: List the country "
+//                + "(with the corresponding movies) that has been nominated "
+//                + "the most number of times for "
+//                + "Best Foreign Language Film award.");
+//        q.question6();
+//        for (String e: q.question6()){
+//            System.out.println(e);
+//        }
+//        System.out.println("\n");
     }
 }

@@ -185,27 +185,31 @@ public class Questions {
                 Document actorPage = null;
 
                 if (number >= numberOfAwards){
-                    q5.add("Actor Name: " + actorName);
+                    q5.add("\n");
+                    q5.add(actorName);
                     q5.add("Number of Awards: " + number);
                     q5.add("Movies: ");
-                    try {
-                    actorPage = Jsoup.connect(
-                            "https://en.wikipedia.org"+href).get();
-                    }   catch (IOException ex) {
-                        ex.printStackTrace();
-                    } 
-                    for (Element e: actorPage.getElementsByTag("td")){
-                        if (e.text().equals("Best Director")){
-                            Elements all = e.siblingElements();
-                            if (all.get(0).text().startsWith("1")||all.get(0).text().startsWith("2")){
-                                String movie = all.get(1).text();
-                                q5.add(movie);
-                            }
-                        }
-                    }
-                }     
-                    
+                }
             }
+        }
+        ArrayList<String> moviesDirectors = new ArrayList<>();
+        for (Element tr: question5.getElementsByTag("tr")){            
+            if (tr.text().contains(" – ") && !tr.text().startsWith("4")){
+               for (Element a: tr.getElementsByTag("a")){
+                   if (!a.text().startsWith("19") && !a.text().startsWith("20"))
+                    moviesDirectors.add(a.text());
+               }
+            }
+        }
+
+        for (int i = 1; i < moviesDirectors.size()-1;i++){
+            
+                if (q5.contains(moviesDirectors.get(i))){
+                    int index = q5.indexOf(moviesDirectors.get(i));
+                    q5.add(index+3,moviesDirectors.get(i+1));
+                    i++;
+                }
+                
         }
         return q5;
     }

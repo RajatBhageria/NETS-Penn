@@ -34,6 +34,8 @@ public class Server {
 	public Server(int port) {
 		try {
 			socket = new ServerSocket(port);
+                        ServerSocket s;
+                        
 			System.out.println("The server is started at port " + port);
 			
 			client = socket.accept();
