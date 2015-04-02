@@ -48,12 +48,22 @@ public class Questions {
         }
         ArrayList<String> q1 = new ArrayList<String>();
             for (Element td: question1.getElementsByTag("td")){
-                if (td.text().equals(producer)){
+                if (producer.equals("Disney")){
+                    if (td.text().equals(producer) || 
+                        td.text().equals("Disney, Pixar")){
                     q1.add(td.previousElementSibling().text());
                 }
+                else{
+                    if (td.text().equals(producer)){
+                        q1.add(td.previousElementSibling().text());
+
+                    }
+                }
+                }
+                
             }
         return q1;
-    }
+    } 
     
     
     /**
@@ -276,54 +286,43 @@ public class Questions {
      * that a director needs to win to be returned by this algorithm. 
      * @return An arrayList of all the directors 
      */
-    public ArrayList<String> question7(String actor, String typeOfAward){
+    public HashSet<String> question7(String actor, String typeOfAward){
         Document question5 = null;
         try {
              question5 = Jsoup.connect("http://en.wikipedia.org/wiki/"
                      + "Academy_Award_for_Best_Animated_Feature").get();
         } catch (IOException ex) {
             ex.printStackTrace();
-        }
-        ArrayList<String> q7 = new ArrayList<String>();
-        for (Element li: question5.getElementsByTag("li")){
-            String person = li.text();
-            if (person.endsWith(")") && person.contains("–")){
-                int openParen = person.indexOf("(");
-                int closeParen = person.indexOf(")");
-                int number = Integer.parseInt(
-                        person.substring(openParen+1, closeParen));
-                
-                String href = li.child(0).attr("href");
-                String actorName = li.child(0).attr("title");
-                Document actorPage = null;
 
-                if (number >= numberOfAwards){
-                    q7.add("\n");
-                    q7.add(actorName);
-                    q7.add("Number of Awards: " + number);
-                    q7.add("Movies: ");
-                }
-            }
         }
-        ArrayList<String> moviesDirectors = new ArrayList<>();
+        HashSet<String> output = new HashSet<>();
         for (Element tr: question5.getElementsByTag("tr")){            
-            if (tr.text().contains(" – ") && !tr.text().startsWith("4")){
+            if (tr.text().contains(" – ")){
                for (Element a: tr.getElementsByTag("a")){
-                   if (!a.text().startsWith("19") && !a.text().startsWith("20"))
-                    moviesDirectors.add(a.text());
+                   if (!a.text().startsWith("20") && !a.text().startsWith("[")){
+                       String href = a.getElementsByAttribute("href").text();
+                       Document temp= null;
+                       try {
+                            temp = Jsoup.connect("http://en.wikipedia.org/wiki/"
+                                    + href).get();
+                       } catch (IOException ex) {
+                           ex.printStackTrace();
+                       } 
+
+                       for (Element newTr: temp.getElementsByTag("tr")){
+                           if (newTr.text().startsWith("Starring")){
+                               //System.out.println( newTr.text());
+                               if (newTr.text().contains(actor)){
+                                   output.add(a.text());
+                               }
+                           }
+                       }
+                       
+                   }
                }
             }
         }
-
-        for (int i = 1; i < moviesDirectors.size()-1;i++){
-                if (q7.contains(moviesDirectors.get(i))){
-                    int index = q7.indexOf(moviesDirectors.get(i));
-                    q7.add(index+3,moviesDirectors.get(i+1));
-                    i++;
-                }
-                
-        }
-        return q7;
+        return output;
     }
     
 }
