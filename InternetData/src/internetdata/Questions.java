@@ -20,15 +20,6 @@ import org.jsoup.select.Elements;
  */
 
 public class Questions {
-    
-    private Document doc;
-    private Element link;
-
-    public Questions() throws IOException {
-        doc = Jsoup.connect("http://en.wikipedia.org/wiki/"
-                + "Portal:Academy_Award").get();
-        link = doc.select("a").first();
-    }
 
 
     /**
@@ -237,8 +228,7 @@ public class Questions {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        HashMap<String,HashSet<String>> q6 = 
-                new HashMap<String, HashSet<String>>();
+        HashMap<String,HashSet<String>> q6 = new HashMap<>();
         for (Element tr: question6.getElementsByTag("tr")){
             
             if ((tr.child(0).text().startsWith("19") 
@@ -252,7 +242,7 @@ public class Questions {
                     
                 }
                 if (!q6.containsKey(country)){
-                    HashSet<String> movies = new HashSet<String>();
+                    HashSet<String> movies = new HashSet<>();
                     movies.add(name);
                     q6.put(country,  movies);
                 }
@@ -265,15 +255,14 @@ public class Questions {
         }
         int size = 0;
         ArrayList<String> output = new ArrayList<>();
-        for (String e:q6.keySet()){
-            if (q6.get(e).size()>size){
-                size =q6.get(e).size();
-                output.clear();
-                output.add("Country: " + e + "\n");
+        for (String key:q6.keySet()){
+            if (q6.get(key).size()>size){
+                size =q6.get(key).size();
+                output.clear(); //Empty the ArrayList  
+                output.add("Country: " + key + "\n");
                 output.add("Movies:");
-                for (String g: q6.get(e)){
-                    output.add(g);
-//                }
+                for (String element: q6.get(key)){
+                    output.add(element);
                 }
             }
         }
@@ -282,9 +271,11 @@ public class Questions {
     
    /**
      * Question 7
-     * @param numberOfAwards. The minimum number of Best Director Awards
-     * that a director needs to win to be returned by this algorithm. 
-     * @return An arrayList of all the directors 
+     * @param actor: A string of the actor who needs to have starred in a 
+     * particular movie to return it.
+     * @param typeOfAward: A string of the type of award (e.g., 
+     * "Best Animated Feature")
+     * @return An HashSet of all the movies that meet the requirements
      */
     public HashSet<String> question7(String actor, String typeOfAward){
         Document question5 = null;
@@ -323,7 +314,82 @@ public class Questions {
             }
         }
         return output;
+        
     }
+    
+       
+    public ArrayList<String> question8(){
+        ArrayList<String> q8 = new ArrayList<>();
+        int year = 1981;
+            q8.add("Averge Age: "+ helperQuestion8(year));
+       
+        return q8;
+    }
+    
+   /**
+     * Question 8
+     * @param year that the user wants the answer to be about
+     * @return ArrayList of the actress's name, 
+     * her age at the time, and the movie she acted in
+     */
+    private int helperQuestion8(int year ){
+        Document question8 = null;
+        ArrayList<Integer> temp = new ArrayList<>();
+
+        try {
+             question8 = Jsoup.connect("http://en.wikipedia.org/wiki/"
+                     + "Academy_Award_for_Best_Actor").get();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+            for (Element tr: question8.getElementsByTag("tr")){
+            if (tr.child(0).text().startsWith(year + "")){
+                Element actor = tr; 
+                int  next = 1 + year;
+                String nextYear = next+ "";
+                System.out.println(nextYear);
+                while (!actor.nextElementSibling().text().
+                        startsWith(nextYear) ){
+                    actor = actor.nextElementSibling();                    
+                    
+                    //Finding the age'
+                    String href="";
+                    try{
+                         href = actor.child(0).child(0).attr("href");
+                    }
+                    catch (Exception e){
+                    }
+                    Document ageDoc = null;
+                    try {
+                        ageDoc = Jsoup.connect(
+                                "https://en.wikipedia.org"+href).get();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    String bday = "";
+                    int ageAtCeremony =0;
+                    for (Element l: ageDoc.getElementsByClass("bday")){
+                        bday = l.text();
+                        Integer birthYearInt = 
+                            Integer.parseInt(bday.substring(0,4));
+                        ageAtCeremony = year - birthYearInt;
+                    }
+ 
+                    
+                    //Adding everything to the ArrayList to be returned
+                    temp.add(ageAtCeremony);
+                }   
+            }
+        }
+        int sum = 0;
+        int ave =0;
+        for (int e: temp){
+            sum +=e;
+        }
+        ave = sum / temp.size();
+        return ave;
+    }
+ 
     
 }
 
