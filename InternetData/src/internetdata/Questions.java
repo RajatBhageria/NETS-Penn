@@ -304,7 +304,8 @@ public class Questions {
      * "Best Animated Feature")
      * @return An HashSet of all the movies that meet the requirements
      */
-    public HashSet<String> question7(String actor, String typeOfAward){
+    public HashSet<String> question7(String actor,
+            String typeOfAward){
         Document question5 = null;
         try {
              question5 = Jsoup.connect("http://en.wikipedia.org" 
@@ -346,9 +347,10 @@ public class Questions {
 
     /**
      * Question 8
-     * @param year that the user wants the answer to be about
-     * @return ArrayList of the actress's name, 
-     * her age at the time, and the movie she acted in
+     * Returns back an ArrayList with the names of all the movies nominated for 
+     * Best Director followed by the budget for each movie. 
+     * @return ArrayList of the movies nominated for best director followed by 
+     * budget for each movie
      */
     public ArrayList<String> question8(){
         Document question8 = null;
@@ -365,7 +367,7 @@ public class Questions {
         for (Element tr: question8.getElementsByTag("tr")){            
             if (tr.text().contains(" – ") && !tr.text().startsWith("4")){
                for (Element a: tr.getElementsByTag("a")){
-                   if (!a.text().startsWith("19") && !a.text().startsWith("20")){
+                  if (!a.text().startsWith("19") && !a.text().startsWith("20")){
                         String href = a.attr("href");
                         moviesDirectors.add(href);
                     }
@@ -383,6 +385,7 @@ public class Questions {
             }
             for (Element e: temp.getElementsByTag("tr")){
                 if (e.text().startsWith("Budget")){
+                    output.add("\n");
                     for (Element title: temp.getElementsByTag("title")){
                         output.add(title.text().substring(0,title.text().
                             indexOf("- Wikipedia, the free encyclopedia")));
@@ -402,21 +405,22 @@ public class Questions {
    
     /**
      * Question Wildcard
-     * @param year that the user wants the answer to be about
-     * @return ArrayList of the actress's name, 
-     * her age at the time, and the movie she acted in
+     * @param year that the user wants to know the average age of the actors 
+     * who were nominated for best actor. 
+     * @return An int with the average age of all the actors nominated for the
+     * best actor position. 
      */
-    public int wildcard(int year ){
+    public int wildcard(int year){
         Document wildcard = null;
         ArrayList<Integer> temp = new ArrayList<>();
 
         try {
-             wildcard = Jsoup.connect("http://en.wikipedia.org/wiki/"
-                     + "Academy_Award_for_Best_Actor").get();
+             wildcard = Jsoup.connect("http://en.wikipedia.org"
+                     + getLink("Best Leading Actor")).get();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-            for (Element tr: wildcard.getElementsByTag("tr")){
+        for (Element tr: wildcard.getElementsByTag("tr")){
             if (tr.child(0).text().startsWith(year + "")){
                 Element actor = tr; 
                 int  next = 1 + year;
@@ -424,7 +428,7 @@ public class Questions {
                 while (!actor.nextElementSibling().text().
                         startsWith(nextYear) ){
                     actor = actor.nextElementSibling();                    
-                    
+
                     //Finding the age'
                     String href="";
                     try{
@@ -447,8 +451,6 @@ public class Questions {
                             Integer.parseInt(bday.substring(0,4));
                         ageAtCeremony = year - birthYearInt;
                     }
- 
-                    
                     //Adding everything to the ArrayList to be returned
                     temp.add(ageAtCeremony);
                 }   
@@ -464,4 +466,3 @@ public class Questions {
     }
      
 }
-
