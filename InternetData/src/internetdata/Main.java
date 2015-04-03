@@ -90,7 +90,7 @@ public class Main {
 //        String actor = "Tom Hanks"; //This is the Actor used
 //        String typeOfAward = "Best Animated Feature";
 //        System.out.println("Question 7: List all movies nominated for "
-//                + "the Best Animated Feature award that starred Tom Hanks");
+//                + typeOfAward + " award that starred " + actor);
 //        for (String e: q.question7(actor, typeOfAward)){
 //            System.out.println(e);
 //        }
@@ -98,12 +98,23 @@ public class Main {
         
         
         //Question 8
-        System.out.println("Question 8: Wildcard:"
-                + "list all average age of all the actors");
+        System.out.println("Question 8: List the budgets of"
+                + " each of the best director nominatd films");
         for (String e: q.question8()){
             System.out.println(e);
         }
         System.out.println("\n");
+        
+        
+        
+        //EC: Wildcard
+        int year = 1936;
+        System.out.println("EC: Wildcard:"
+                + "The average age of all the actors nominated for the Best Leading Actor in "+ year + "is: ");
+        System.out.println(q.wildcard(year));
+        System.out.println("\n");
+
+
         
     }
 }
